@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import Button from "./Button";
 import AnimationData from "../assets/heroAnimation.json";
 import Lottie from "lottie-react";
-
+import SpringModal from "./SpringModal";
 
 
 const HeroSection = () => {
+  const [isLogged, setIsLogged] = useState(false)
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handlePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
+  const [isModal, setIsModal] = useState(false)
 
   return (
     // <div className="md:pt-32 mt-16">
@@ -52,7 +54,7 @@ const HeroSection = () => {
     >
       <div className="py-2 flex-1 flex flex-col items-start justify-center gap-4">
         <div className="flex items-center gap-2 justify-start p-2">
-          
+        <SpringModal isOpen={isModal} setIsOpen={setIsModal} />
           <p>
             Welcome to <mark>Something</mark>
           </p>
@@ -70,7 +72,10 @@ const HeroSection = () => {
           rem, accusantium molestias ipsam inventore repellendus dolores ad
           mollitia doloremque nemo!
         </p>
-        <Button text={"Sometext"} />
+        <div onClick={()=> setIsModal(!isModal)}><Button text={" 🦊 Connect MetaMask"} /></div>
+        {
+          isModal && <SpringModal isOpen={isModal} setIsOpen={setIsModal} />
+        }
       </div>
 
       <div className="py-2 flex-1 flex relative items-center">
