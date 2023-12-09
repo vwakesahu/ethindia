@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-router-dom";
 import Web3 from "web3";
+import { Network, Alchemy } from "alchemy-sdk";
+import BigNumber from "bignumber.js";
 
 export const DoTransaction = () => {
   const [address, setaddress] = useState("");
@@ -27,6 +29,50 @@ export const DoTransaction = () => {
   //   }
   // }, [])
 
+  const getCurrentGasPrices = async () => {
+    // const response = await fetch(
+    //   "https://ethgasstation.info/api/ethgasAPI.json"
+    // );
+    // const data = await response.json();
+    // return {
+    //   low: data.safeLow / 10,
+    //   average: data.average / 10,
+    //   high: data.fast / 10,
+    // };
+    const settings = {
+        apiKey: "e3GZ84yye7MSD8J9SGMKxTlkLmEMSuF_", // Replace with your Alchemy API Key.
+        network: Network.ETH_SEPOLIA, // Replace with your network.
+      };
+      const alchemy = new Alchemy(settings);
+    
+      alchemy.core.getGasPrice().then((gasPrice) => {
+        let price= new BigNumber(gasPrice['_hex']);
+        console.log(price.toFraction());
+        return price.toFraction;
+    }
+      );
+  };
+  //   const getCurrentGasPrices = async () => {
+  //     const alchemyApiKey = 'e3GZ84yye7MSD8J9SGMKxTlkLmEMSuF_'; // Replace with your Alchemy API key
+  //     const alchemyUrl = `https://eth-mainnet.alchemyapi.io/v2/${alchemyApiKey}`;
+
+  //     try {
+  //       const response = await fetch(alchemyUrl);
+  //       const data = await response.json();
+
+  //       if (data && data.result && data.result.fast) {
+  //         // You can adjust the property names based on your Alchemy response structure
+  //         const { fast, average, safeLow } = data.result;
+  //         return { low: safeLow, average, high: fast };
+  //       } else {
+  //         throw new Error('Failed to fetch gas prices from Alchemy');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching gas prices:', error);
+  //       throw error;
+  //     }
+  //   };
+
   const transferEth = async (e) => {
     e.preventDefault();
     try {
@@ -36,12 +82,13 @@ export const DoTransaction = () => {
       web3.setProvider(new Web3.providers.WebsocketProvider(wssethProvider));
       web3.eth.defaultAccount = "0xA1763dc1a0356B8038d0dE76d9967B717f1460E1"; //address of user
 
-    //   let amount = amount;
-    //   let to = to;
+      //   let amount = amount;
+      let to = address;
       let sendersPrivateKey =
         "0x760bec1b10b33e926cd28300bd2ace5eeaf0c909e9b9adf8cdf59ab48b60d7f2"; // privarte key of sender
       let from = web3.eth.defaultAccount;
-      const privateKey = await Buffer.from(sendersPrivateKey.substr(2), "hex");
+      //   const privateKey = await Buffer.from(sendersPrivateKey.substr(2), "hex");/
+      const privateKey = sendersPrivateKey;
 
       const myBalanceWei = await web3.eth.getBalance(web3.eth.defaultAccount);
       const myBalance = web3.utils.fromWei(myBalanceWei, "ether");
