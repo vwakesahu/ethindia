@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import SpringModal from "./SpringModal";
 const NavBar = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isConnectWallet, setIsConnectWallet] = useState(false);
   const [Email, setEmail] = useState("");
+  const [isModal, setIsModal] = useState(false)
 
+  const toggleModal = () =>{
+    setIsModal(!isModal)
+  }
   const toggleMenu = () => {
     // console.log(isMenuVisible);
     setIsMenuVisible(!isMenuVisible);
@@ -20,11 +25,11 @@ const NavBar = () => {
     <div className=" mt-4">
       <nav className="border-gray-200">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
-          <a href="#" className="flex">
+          <Link to="/" className="flex">
             <span className="self-center text-lg font-semibold whitespace-nowrap">
               Logo
             </span>
-          </a>
+          </Link>
           <button
             data-collapse-toggle="mobile-menu"
             type="button"
@@ -114,43 +119,30 @@ const NavBar = () => {
                 {isConnectWallet && (
                   <div
                     id="dropdownNavbar"
-                    className="absolute   z-10 list-none   rounded  my-4 w-44 bg-opacity-10 bg-white backdrop-blur-lg shadow-lg p-3"
+                    className="absolute   z-10 list-none   rounded  my-4 w-52 bg-opacity-10 bg-white backdrop-blur-lg shadow-lg"
                   >
-                    {/* <ul className="py-1" aria-labelledby="dropdownLargeButton">
-                      <li>
-                        <a
-                          href="#"
-                          className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                        >
-                          Dashboard
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                        >
-                          Settings
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                        >
-                          Earnings
-                        </a>
-                      </li>
+                    <ul className="" aria-labelledby="dropdownLargeButton">
+                     
+                        <li>
+                          <p
+                            className="text-sm hover:bg-gray-100 rounded-sm hover:text-black text-gray-400 block px-4 py-2"
+                          onClick={toggleModal}
+                          >
+                            Existing Wallet
+                          </p>
+                        </li>
+                 
+                    
                       <div className="">
-                        <a
+                        <Link to='connect-n-wallet'
                           href="#"
-                          className="text-sm py-1 hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
+                          className="text-sm rounded-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
                         >
-                          Sign out
-                        </a>
+                          New Wallet
+                       </Link>
                       </div>{" "}
-                    </ul> */}
-                    <div className="border rounded-lg pt-2">
+                    </ul>
+                    {/* <div className="border rounded-lg pt-2">
                       <input
                         className="bg-transparent w-full px-2 py-1 outline-none text-sm"
                         type="text"
@@ -170,7 +162,7 @@ const NavBar = () => {
                         }}
                       />
                       <button className="w-full bg-white text-black mt-5 py-2">Submit</button>
-                    </div>
+                    </div> */}
                   </div>
                 )}
               </li>
