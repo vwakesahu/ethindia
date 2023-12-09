@@ -1,10 +1,13 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Web3 from "web3";
 
 const ConnectWallet = () => {
   const [emaol, setEmaol] = useState("");
   const [username, setUsername] = useState("");
+  const [senderAccount, setsenderAccount] = useState([]);
+  const navigate = useNavigate();
 
   const wssethProvider =
     "wss://eth-mainnet.g.alchemy.com/v2/e3GZ84yye7MSD8J9SGMKxTlkLmEMSuF_";
@@ -23,6 +26,11 @@ const ConnectWallet = () => {
         `SMART__07b7ee54020142cb8d7b2a6c963a0b4e`
       );
       console.log(account);
+      setsenderAccount(account);
+      localStorage.setItem("account", JSON.stringify(senderAccount[0]));
+      console.log(localStorage.getItem("account"));
+      // navigate("/transaction", { state: { account: senderAccount[0] } });
+      navigate("/transaction");
       // res.json({
       //   status: "ok",
       //   account: account[0],
