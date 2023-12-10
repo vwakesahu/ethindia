@@ -1,10 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 // import { JsonRpcProvider } from "ethers";
-// import { ethers } from "ethers";
-import { JsonRpcProvider } from "ethers/providers";
-import { hexlify } from "ethers/utils";
-
+import { ethers } from "ethers";
 
 import { getContract, createPublicClient, http } from "viem";
 import { createBundlerClient, createSmartAccountClient } from "permissionless";
@@ -18,19 +15,13 @@ import {
   signerToSafeSmartAccount,
 } from "permissionless/accounts";
 
-import ERC20_ABI from './erc20Abi.json'; // ERC-20 ABI in json format
-import Swap_ABI from './Swap.json'; // ERC-20 ABI in json format
-
-
 export const Demo = () => {
-  
-  useEffect(async () => {
+  const func = async () => {
     const rpcUrl =
       "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
-        // const provider = new JsonRpcProvider(rpcUrl);
+    // const provider = new JsonRpcProvider(rpcUrl);
 
-    async function main() 
-    {
+    async function main() {
       const publicClient = createPublicClient({
         transport: http(rpcUrl),
       });
@@ -81,11 +72,11 @@ export const Demo = () => {
       //     entryPoint: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789", // global entrypoint
       //     saltNonce: 0n, // optional
       //   });
-    //   const privateKey =
-    //     "0x4337433743374337433743374337433743374337433743374337433743374337";
-    //   const signer = new ethers.Wallet(privateKey, provider);
+      //   const privateKey =
+      //     "0x4337433743374337433743374337433743374337433743374337433743374337";
+      //   const signer = new ethers.Wallet(privateKey, provider);
 
-    //   console.log("creating safe account with", signer);
+      //   console.log("creating safe account with", signer);
       //   const safeAccount = await privateKeyToSafeSmartAccount(publicClient, {
       //     privateKey:
       //       "0x4337433743374337433743374337433743374337433743374337433743374337",
@@ -94,121 +85,122 @@ export const Demo = () => {
       //     saltNonce: 0n, // optional
       //   });
 
-    // const provider = new ethers.BrowserProvider(window.ethereum);
-    // Signers are authenticated providers connected to the current address in MetaMask.
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-        console.log(signer);
+      // const provider = new ethers.BrowserProvider(window.ethereum);
+      // Signers are authenticated providers connected to the current address in MetaMask.
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      console.log(signer);
 
-    const customSigner = {
-      address: await signer.getAddress(),
-      publicKey: "0x..",
-      source: "custom",
-      type: "local",
-      signMessage: async ({ message }) => {
-        return message;
-      },
-      signTypedData: async (typeData) => {
-        return signer.signTypedData(
-          typeData.domain,
-          {
-            [typeData.primaryType]: typeData[typeData.primaryType],
-          },
-          typeData.message
-        );
-      },
-    };
-    console.log(customSigner);
+      const customSigner = {
+        address: await signer.getAddress(),
+        publicKey: "0x..",
+        source: "custom",
+        type: "local",
+        signMessage: async ({ message }) => {
+          return message;
+        },
+        signTypedData: async (typeData) => {
+          return signer.signTypedData(
+            typeData.domain,
+            {
+              [typeData.primaryType]: typeData[typeData.primaryType],
+            },
+            typeData.message
+          );
+        },
+      };
+      console.log(customSigner);
 
-    // const customSigner = {
-    //     address: await signer.getAddress(),
-    //     publicKey: "0x..",
-    //     source: "custom",
-    //     type: 'local',
-    //     signMessage: async ({message}) => {
-    //         return "0x.."
-    //     },
-    //     signTypedData: async (typeData) => {
-    //         return signer.signTypedData(typeData.domain, {
-    //             [typeData.primaryType]: typeData[typeData.primaryType]
-    //         }, typeData.message)
-    //     }
+      // const customSigner = {
+      //     address: await signer.getAddress(),
+      //     publicKey: "0x..",
+      //     source: "custom",
+      //     type: 'local',
+      //     signMessage: async ({message}) => {
+      //         return "0x.."
+      //     },
+      //     signTypedData: async (typeData) => {
+      //         return signer.signTypedData(typeData.domain, {
+      //             [typeData.primaryType]: typeData[typeData.primaryType]
+      //         }, typeData.message)
+      //     }
 
-    //   }
+      //   }
 
-    const safeAccount = await signerToSafeSmartAccount(publicClient, {
-      entryPoint: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
-      signer: customSigner,
-      safeVersion: "1.4.1",
-      saltNonce: 0n,
-    });
+      const safeAccount = await signerToSafeSmartAccount(publicClient, {
+        entryPoint: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+        signer: customSigner,
+        safeVersion: "1.4.1",
+        saltNonce: 0n,
+      });
 
-    console.log(safeAccount);
-    const smartAccountClient = createSmartAccountClient({
-      account: safeAccount,
-      chain: "goerli",
-      transport: http(
-        "https://api.pimlico.io/v1/goerli/rpc?apikey=f9dae1b5-1aea-471d-a6c1-18c0f20398b0"
-      ),
-      sponsorUserOperation: paymasterClient.sponsorUserOperation, // optional
-    });
-    console.log("smartAccountClient created Succesfully");
+      console.log(safeAccount);
+      const smartAccountClient = createSmartAccountClient({
+        account: safeAccount,
+        chain: "goerli",
+        transport: http(
+          "https://api.pimlico.io/v1/goerli/rpc?apikey=f9dae1b5-1aea-471d-a6c1-18c0f20398b0"
+        ),
+        sponsorUserOperation: paymasterClient.sponsorUserOperation, // optional
+      });
+      console.log("smartAccountClient created Succesfully");
 
-    const token0 = "0x7a72403B54e166Dc8b5494dB49D832d160b70761"; // Address of the ERC-20 token
-    const token1 = "0x0716A45a3F61139C0e3E646511307dbf137C7C7f"; // Address of the ERC-20 token
-    const value2 = "20"; // Amount of the ERC-20 token to transfer
-    const Router = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
-    // Read the ERC-20 token contract
-    
+      const token0 = "0x7a72403B54e166Dc8b5494dB49D832d160b70761"; // Address of the ERC-20 token
+      const token1 = "0x0716A45a3F61139C0e3E646511307dbf137C7C7f"; // Address of the ERC-20 token
+      const value2 = "20"; // Amount of the ERC-20 token to transfer
+      const Router = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
+      // Read the ERC-20 token contract
+      const ERC20_ABI = require("./erc20Abi.json").default; // ERC-20 ABI in json format
+      const Swap_ABI = require("./Swap.json").default; // ERC-20 ABI in json format
 
-    const erc20 = new ethers.Contract(token0, ERC20_ABI, provider);
-    const decimals = await Promise.all([erc20.decimals()]);
-    const amount2 = ethers.utils.parseUnits(value2, decimals);
-    console.log(amount2);
+      const erc20 = new ethers.Contract(token0, ERC20_ABI, provider);
+      const decimals = await Promise.all([erc20.decimals()]);
+      const amount2 = ethers.utils.parseUnits(value2, decimals);
+      console.log(amount2);
 
-    const tokenCon = getContract({
-      address: token1,
-      abi: ERC20_ABI,
-      publicClient,
-      walletClient: smartAccountClient,
-      maxFeePerGas: gasPrices.fast.maxFeePerGas, // if using Pimlico
-      maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas, // if using Pimlico
-    });
-    console.log("Creating Router");
+      const tokenCon = getContract({
+        address: token1,
+        abi: ERC20_ABI,
+        publicClient,
+        walletClient: smartAccountClient,
+        maxFeePerGas: gasPrices.fast.maxFeePerGas, // if using Pimlico
+        maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas, // if using Pimlico
+      });
+      console.log("Creating Router");
 
-    const routerCon = getContract({
-      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564",
-      abi: Swap_ABI,
-      publicClient,
-      walletClient: smartAccountClient,
-      maxFeePerGas: gasPrices.fast.maxFeePerGas, // if using Pimlico
-      maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas, // if using Pimlico
-    });
-    console.log("Created Router");
+      const routerCon = getContract({
+        address: "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+        abi: Swap_ABI,
+        publicClient,
+        walletClient: smartAccountClient,
+        maxFeePerGas: gasPrices.fast.maxFeePerGas, // if using Pimlico
+        maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas, // if using Pimlico
+      });
+      console.log("Created Router");
 
-    const txHash = await tokenCon.write.approve([Router, amount2]);
-    console.log("Tx succesful");
+      const txHash = await tokenCon.write.approve([Router, amount2]);
+      console.log("Tx succesful");
 
-    console.log(txHash);
+      console.log(txHash);
 
-    const txHash2 = await routerCon.write.exactInputSingle([
-      {
-        tokenIn: token1,
-        tokenOut: token0,
-        fee: 500,
-        recipient: "0x4337004ec9c1417F1c7a26EBD4B4fbed6ACf9E5d",
-        deadline: 1801670579,
-        amountIn: amount2,
-        amountOutMinimum: 0,
-        sqrtPriceLimitX96: 0,
-      },
-    ]);
-    console.log(txHash2);
+      const txHash2 = await routerCon.write.exactInputSingle([
+        {
+          tokenIn: token1,
+          tokenOut: token0,
+          fee: 500,
+          recipient: "0x4337004ec9c1417F1c7a26EBD4B4fbed6ACf9E5d",
+          deadline: 1801670579,
+          amountIn: amount2,
+          amountOutMinimum: 0,
+          sqrtPriceLimitX96: 0,
+        },
+      ]);
+      console.log(txHash2);
     }
     main();
 
-    return () => {};
-  }, []);
+    // Dependencies array is empty, so this effect runs once when the component mounts.
 
-  return <div>Demo</div>;
+    return <div>try</div>;
+  };
 };
