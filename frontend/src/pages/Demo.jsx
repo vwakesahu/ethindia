@@ -1,9 +1,3 @@
-import React from 'react'
-
-const Demo = () => {
-  return (
-    <div>Demo</div>
-  )
+export const Demo = () => {
+<div className="mt-32 text-white">Demo</div>
 }
-
-export default Demo
