@@ -5,11 +5,11 @@ const NavBar = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isConnectWallet, setIsConnectWallet] = useState(false);
   const [Email, setEmail] = useState("");
-  const [isModal, setIsModal] = useState(false)
+  const [isModal, setIsModal] = useState(false);
 
-  const toggleModal = () =>{
-    setIsModal(!isModal)
-  }
+  const toggleModal = () => {
+    setIsModal(!isModal);
+  };
   const toggleMenu = () => {
     // console.log(isMenuVisible);
     setIsMenuVisible(!isMenuVisible);
@@ -95,77 +95,17 @@ const NavBar = () => {
                   </svg>
                 </select>
               </li>
-              <li className="relative z-50">
-                <button
-                  id="dropdownNavbarLink"
-                  data-dropdown-toggle="dropdownNavbar"
-                  className="z-50 text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
-                  onClick={toggleConnectWallet}
-                >
-                  Connect Wallet
-                  <svg
-                    className="w-4 h-4 ml-1"
-                    fill="white"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
+              <Link to="/swap">
+                <li className="relative z-50">
+                  <button
+                    id="dropdownNavbarLink"
+                    data-dropdown-toggle="dropdownNavbar"
+                    className="z-50 text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-                {isConnectWallet && (
-                  <div
-                    id="dropdownNavbar"
-                    className="absolute   z-10 list-none   rounded  my-4 w-52 bg-opacity-10 bg-white backdrop-blur-lg shadow-lg"
-                  >
-                    <ul className="" aria-labelledby="dropdownLargeButton">
-                     
-                        <li>
-                          <p
-                            className="text-sm hover:bg-gray-100 rounded-sm hover:text-black text-gray-400 block px-4 py-2"
-                          onClick={toggleModal}
-                          >
-                            Existing Wallet
-                          </p>
-                        </li>
-                 
-                    
-                      <div className="">
-                        <Link to='connect-n-wallet'
-                          href="#"
-                          className="text-sm rounded-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                        >
-                          New Wallet
-                       </Link>
-                      </div>{" "}
-                    </ul>
-                    {/* <div className="border rounded-lg pt-2">
-                      <input
-                        className="bg-transparent w-full px-2 py-1 outline-none text-sm"
-                        type="text"
-                        placeholder="Email"
-                        value={Email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                        }}
-                      />
-                      <input
-                        className="bg-transparent w-full px-2 py-1 outline-none text-sm"
-                        type="text"
-                        placeholder="Username"
-                        value={Email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                        }}
-                      />
-                      <button className="w-full bg-white text-black mt-5 py-2">Submit</button>
-                    </div> */}
-                  </div>
-                )}
-              </li>
+                    Swapping
+                  </button>
+                </li>
+              </Link>
               <li>
                 <a
                   href="#"
