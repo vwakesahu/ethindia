@@ -107,7 +107,7 @@ export const Demo = () => {
             return signer.signTypedData(
               typeData.domain,
               {
-                [typeData.primaryType]: typeData[typeData.primaryType],
+                [typeData.primaryType]: typeData.types[typeData.primaryType],
               },
               typeData.message
             );
@@ -307,7 +307,7 @@ export const Demo = () => {
       console.log(tokenCon);
 
       const txHash = await tokenCon.write.approve([Router, amount2]);
-      console.log("Tx succesful");
+      console.log(txHash);
 
     //   console.log(txHash);
 
