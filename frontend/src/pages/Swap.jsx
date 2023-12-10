@@ -1,9 +1,9 @@
-import React from 'react'
+import { useState } from "react";
+import SpringModal from "../components/SpringModal";
 
-const Swap = () => {
-  return (
-    <div>Swap</div>
-  )
-}
+export const Swap = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  return <SpringModal isOpen={isVisible} setIsOpen={isVisible} />;
+};
 
-export default Swap
+

@@ -2,14 +2,44 @@ import React, { useState } from "react";
 import Button from "./Button";
 import AnimationData from "../assets/heroAnimation.json";
 import Lottie from "lottie-react";
+import { ethers } from "ethers";
 
-
+import SpringModal from "./SpringModal";
+import { MetaMaskButton } from "@metamask/sdk-react-ui";
 
 const HeroSection = () => {
+  const [isLogged, setIsLogged] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handlePopup = () => {
     setIsPopupOpen(!isPopupOpen);
+  };
+  const [isModal, setIsModal] = useState(false);
+  const handleSigner = async () => {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    // Signers are authenticated providers connected to the current address in MetaMask.
+    const signer = await provider.getSigner();
+    console.log(signer);
+
+    const customSigner = {
+      address: await signer.getAddress(),
+      publicKey: "0x..",
+      source: "custom",
+      type: "local",
+      signMessage: async ({ message }) => {
+        return message;
+      },
+      signTypedData: async (typeData) => {
+        return signer.signTypedData(
+          typeData.domain,
+          {
+            [typeData.primaryType]: typeData[typeData.primaryType],
+          },
+          typeData.message
+        );
+      },
+    };
+    console.log(customSigner);
   };
 
   return (
@@ -52,7 +82,7 @@ const HeroSection = () => {
     >
       <div className="py-2 flex-1 flex flex-col items-start justify-center gap-4">
         <div className="flex items-center gap-2 justify-start p-2">
-          
+          {/* <SpringModal isOpen={isModal} setIsOpen={setIsModal} /> */}
           <p>
             Welcome to <mark>Something</mark>
           </p>
@@ -70,7 +100,14 @@ const HeroSection = () => {
           rem, accusantium molestias ipsam inventore repellendus dolores ad
           mollitia doloremque nemo!
         </p>
-        <Button text={"Sometext"} />
+        {/* <div onClick={()=> setIsModal(!isModal)}><Button text={" 🦊 Connect MetaMask"} /></div>
+        {
+          isModal && <SpringModal isOpen={isModal} setIsOpen={setIsModal} />
+        } */}
+        <div className="text-black">
+          <MetaMaskButton theme={"dark"} color="black"></MetaMaskButton>
+          <button onClick={handleSigner}>Get Signer</button>
+        </div>
       </div>
 
       <div className="py-2 flex-1 flex relative items-center">
@@ -80,9 +117,7 @@ const HeroSection = () => {
       </div>
 
       <div className="relative">
-        <div className="absolute -top-56">
-          {/* <Demo /> */}
-        </div>
+        <div className="absolute -top-56">{/* <Demo /> */}</div>
       </div>
     </section>
   );

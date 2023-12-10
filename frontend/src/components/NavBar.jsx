@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import SpringModal from "./SpringModal";
 const NavBar = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isConnectWallet, setIsConnectWallet] = useState(false);
+  const [Email, setEmail] = useState("");
+  const [isModal, setIsModal] = useState(false);
+
+  const toggleModal = () => {
+    setIsModal(!isModal);
+  };
   const toggleMenu = () => {
     // console.log(isMenuVisible);
     setIsMenuVisible(!isMenuVisible);
@@ -15,14 +22,14 @@ const NavBar = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-4">
+    <div className=" mt-4">
       <nav className="border-gray-200">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
-          <a href="#" className="flex">
+          <Link to="/" className="flex">
             <span className="self-center text-lg font-semibold whitespace-nowrap">
               Logo
             </span>
-          </a>
+          </Link>
           <button
             data-collapse-toggle="mobile-menu"
             type="button"
@@ -67,12 +74,11 @@ const NavBar = () => {
                 </Link>
               </li>
 
-              <li className="relative">
+              <li className="relative z-50">
                 <select
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar"
-                  className="text-gray-700 hover:bg-gray-50 border-b bg-transparent border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
-                  
+                  className="text-gray-700 hover:bg-gray-50 border-b bg-transparent outline-none border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
                 >
                   <option>Ethereum</option>
                   <svg
@@ -87,144 +93,24 @@ const NavBar = () => {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  {isMenuVisible && (
-                    <div
-                      id="dropdownNavbar"
-                      className="absolute  text-base z-10 list-none divide-y divide-gray-100 rounded  my-4 w-44 bg-opacity-10 bg-white backdrop-blur-lg shadow-lg"
-                    >
-                      <ul
-                        className="py-1"
-                        aria-labelledby="dropdownLargeButton"
-                      >
-                        <li>
-                          <a
-                            href="#"
-                            className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                          >
-                            Dashboard
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                          >
-                            Settings
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                          >
-                            Earnings
-                          </a>
-                        </li>
-                        <div className="">
-                          <a
-                            href="#"
-                            className="text-sm py-1 hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                          >
-                            Sign out
-                          </a>
-                        </div>{" "}
-                      </ul>
-                    </div>
-                  )}
                 </select>
               </li>
-              <li className="relative">
-                <button
-                  id="dropdownNavbarLink"
-                  data-dropdown-toggle="dropdownNavbar"
-                  className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
-                  onClick={toggleConnectWallet}
-                >
-                  Provider
-                  <svg
-                    className="w-4 h-4 ml-1"
-                    fill="white"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
+              <Link to="/swap">
+                <li className="relative z-50">
+                  <button
+                    id="dropdownNavbarLink"
+                    data-dropdown-toggle="dropdownNavbar"
+                    className="z-50 text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-                {isConnectWallet && (
-                  <div
-                    id="dropdownNavbar"
-                    className="absolute  text-base z-10 list-none divide-y divide-gray-100 rounded  my-4 w-44 bg-opacity-10 bg-white backdrop-blur-lg shadow-lg"
-                  >
-                    <ul className="py-1" aria-labelledby="dropdownLargeButton">
-                      <li>
-                        <a
-                          href="#"
-                          className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                        >
-                          Dashboard
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                        >
-                          Settings
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="text-sm hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                        >
-                          Earnings
-                        </a>
-                      </li>
-                      <div className="">
-                        <a
-                          href="#"
-                          className="text-sm py-1 hover:bg-gray-100 hover:text-black text-gray-400 block px-4 py-2"
-                        >
-                          Sign out
-                        </a>
-                      </div>{" "}
-                    </ul>
-                  </div>
-                )}
-              </li>
+                    Swapping
+                  </button>
+                </li>
+              </Link>
               <li>
                 <a
                   href="#"
                   className="text-gray-700 hover:bg-gray-50 border-b border-gray-100"
                 ></a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0"
-                >
-                  Contact
-                </a>
               </li>
             </ul>
           </div>
