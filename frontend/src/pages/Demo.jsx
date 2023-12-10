@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 // import { JsonRpcProvider } from "ethers";
 import { ethers } from "ethers";
+import { parseUnits } from "viem";
 
 import { getContract, createPublicClient, http } from "viem";
 import { createBundlerClient, createSmartAccountClient } from "permissionless";
@@ -14,7 +15,8 @@ import {
   privateKeyToSafeSmartAccount,
   signerToSafeSmartAccount,
 } from "permissionless/accounts";
-
+let publicClient;
+let bundlerClient;
 export const Demo = () => {
   const func = async () => {
     const rpcUrl =
@@ -22,7 +24,8 @@ export const Demo = () => {
     // const provider = new JsonRpcProvider(rpcUrl);
 
     async function main() {
-      const publicClient = createPublicClient({
+      // Your code here
+      publicClient = createPublicClient({
         transport: http(rpcUrl),
       });
 
@@ -31,7 +34,6 @@ export const Demo = () => {
           "https://api.pimlico.io/v2/goerli/rpc?apikey=f9dae1b5-1aea-471d-a6c1-18c0f20398b0"
         ),
       });
-
       // You may need to replace 'some-library' with the actual library you are using for createPublicClient, createPimlicoPaymasterClient, and http.
 
       // const safeAccount = await privateKeyToSafeSmartAccount(publicClient, {
@@ -55,7 +57,7 @@ export const Demo = () => {
       // });
 
       // console.log(safeAccount);
-      const bundlerClient = createPimlicoBundlerClient({
+      bundlerClient = createPimlicoBundlerClient({
         transport: http(
           "https://api.pimlico.io/v1/goerli/rpc?apikey=f9dae1b5-1aea-471d-a6c1-18c0f20398b0"
         ),
@@ -88,6 +90,7 @@ export const Demo = () => {
       // const provider = new ethers.BrowserProvider(window.ethereum);
       // Signers are authenticated providers connected to the current address in MetaMask.
       const provider = new ethers.BrowserProvider(window.ethereum);
+      console.log(provider);
       const signer = await provider.getSigner();
       console.log(signer);
 
@@ -100,15 +103,21 @@ export const Demo = () => {
           return message;
         },
         signTypedData: async (typeData) => {
-          return signer.signTypedData(
-            typeData.domain,
-            {
-              [typeData.primaryType]: typeData[typeData.primaryType],
-            },
-            typeData.message
-          );
+          try {
+            return signer.signTypedData(
+              typeData.domain,
+              {
+                [typeData.primaryType]: typeData[typeData.primaryType],
+              },
+              typeData.message
+            );
+          } catch (error) {
+            console.error("Error signing typed data:", error);
+            throw error; // Rethrow the error to propagate it further if needed
+          }
         },
       };
+
       console.log(customSigner);
 
       // const customSigner = {
@@ -149,18 +158,72 @@ export const Demo = () => {
       const token1 = "0x0716A45a3F61139C0e3E646511307dbf137C7C7f"; // Address of the ERC-20 token
       const value2 = "20"; // Amount of the ERC-20 token to transfer
       const Router = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
-      // Read the ERC-20 token contract
-      const ERC20_ABI = require("./erc20Abi.json").default; // ERC-20 ABI in json format
-      const Swap_ABI = require("./Swap.json").default; // ERC-20 ABI in json format
+      // // Read the ERC-20 token contract
+      // const ERC20_ABI = require("./erc20Abi.json").default; // ERC-20 ABI in json format
+      // const Swap_ABI = require("./Swap.json").default; // ERC-20 ABI in json format
 
-      const erc20 = new ethers.Contract(token0, ERC20_ABI, provider);
-      const decimals = await Promise.all([erc20.decimals()]);
-      const amount2 = ethers.utils.parseUnits(value2, decimals);
+      const erc20 = new ethers.Contract(
+        token0,
+        [
+          {
+            inputs: [
+              {
+                internalType: "address",
+                name: "spender",
+                type: "address",
+              },
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            name: "approve",
+            outputs: [
+              {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+              },
+            ],
+            stateMutability: "nonpayable",
+            type: "function",
+          },
+        ],
+        provider
+      );
+      const decimals = 18;
+      const amount2 = parseUnits(value2, decimals);
       console.log(amount2);
 
       const tokenCon = getContract({
         address: token1,
-        abi: ERC20_ABI,
+        abi: [
+          {
+            inputs: [
+              {
+                internalType: "address",
+                name: "spender",
+                type: "address",
+              },
+              {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+              },
+            ],
+            name: "approve",
+            outputs: [
+              {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+              },
+            ],
+            stateMutability: "nonpayable",
+            type: "function",
+          },
+        ],
         publicClient,
         walletClient: smartAccountClient,
         maxFeePerGas: gasPrices.fast.maxFeePerGas, // if using Pimlico
@@ -170,18 +233,83 @@ export const Demo = () => {
 
       const routerCon = getContract({
         address: "0xE592427A0AEce92De3Edee1F18E0157C05861564",
-        abi: Swap_ABI,
+        abi: [
+          {
+            inputs: [
+              {
+                components: [
+                  {
+                    internalType: "address",
+                    name: "tokenIn",
+                    type: "address",
+                  },
+                  {
+                    internalType: "address",
+                    name: "tokenOut",
+                    type: "address",
+                  },
+                  {
+                    internalType: "uint24",
+                    name: "fee",
+                    type: "uint24",
+                  },
+                  {
+                    internalType: "address",
+                    name: "recipient",
+                    type: "address",
+                  },
+                  {
+                    internalType: "uint256",
+                    name: "deadline",
+                    type: "uint256",
+                  },
+                  {
+                    internalType: "uint256",
+                    name: "amountIn",
+                    type: "uint256",
+                  },
+                  {
+                    internalType: "uint256",
+                    name: "amountOutMinimum",
+                    type: "uint256",
+                  },
+                  {
+                    internalType: "uint160",
+                    name: "sqrtPriceLimitX96",
+                    type: "uint160",
+                  },
+                ],
+                internalType: "struct ISwapRouter.ExactInputSingleParams",
+                name: "params",
+                type: "tuple",
+              },
+            ],
+            name: "exactInputSingle",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "amountOut",
+                type: "uint256",
+              },
+            ],
+            stateMutability: "payable",
+            type: "function",
+          },
+        ],
         publicClient,
         walletClient: smartAccountClient,
         maxFeePerGas: gasPrices.fast.maxFeePerGas, // if using Pimlico
         maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas, // if using Pimlico
       });
+
       console.log("Created Router");
+      console.log("sending Transaction");
+      console.log(tokenCon);
 
       const txHash = await tokenCon.write.approve([Router, amount2]);
       console.log("Tx succesful");
 
-      console.log(txHash);
+    //   console.log(txHash);
 
       const txHash2 = await routerCon.write.exactInputSingle([
         {
@@ -198,9 +326,7 @@ export const Demo = () => {
       console.log(txHash2);
     }
     main();
+  }; // Dependencies array is empty, so this effect runs once when the component mounts.
 
-    // Dependencies array is empty, so this effect runs once when the component mounts.
-
-    return <div>try</div>;
-  };
+  return <div onClick={func}>trjh h gh cgf hyfg cy</div>;
 };
