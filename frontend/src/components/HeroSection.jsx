@@ -105,7 +105,7 @@ const HeroSection = () => {
           Welcome to our Frictionless DEX, a cutting-edge decentralized exchange
           (DEX) that brings forth a user-friendly solution for gasless token
           swaps, supporting both EOA(Externally Owned Accounts) and
-          ERC4337(Smart Wallet) wallets across various blockchain networks.
+          ERC4337(Smart Wallet) wallets across various blockchain networks.
         </p>
         {/* <div onClick={()=> setIsModal(!isModal)}><Button text={" 🦊 Connect MetaMask"} /></div>
         {
