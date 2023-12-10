@@ -3,6 +3,7 @@ import Button from "./Button";
 import AnimationData from "../assets/heroAnimation.json";
 import Lottie from "lottie-react";
 import { ethers } from "ethers";
+import Loader from "./Loader";
 
 import SpringModal from "./SpringModal";
 import { MetaMaskButton } from "@metamask/sdk-react-ui";
@@ -15,6 +16,9 @@ const HeroSection = () => {
     setIsPopupOpen(!isPopupOpen);
   };
   const [isModal, setIsModal] = useState(false);
+  const handler = () => {
+    setIsModal(!isModal);
+  };
   const handleSigner = async () => {
     const provider = new ethers.BrowserProvider(window.ethereum);
     // Signers are authenticated providers connected to the current address in MetaMask.
@@ -84,29 +88,40 @@ const HeroSection = () => {
         <div className="flex items-center gap-2 justify-start p-2">
           {/* <SpringModal isOpen={isModal} setIsOpen={setIsModal} /> */}
           <p>
-            Welcome to <mark>Something</mark>
+            Welcome to{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 text-xl">
+              FrictionlessDEX
+            </span>
           </p>
           <div className="w-6 h-6 overflow-hidden"></div>
         </div>
         <p className="md:-mt-30 text-[2.5rem] md:text-[3rem] font-bold tracking-wide leading-tight">
-          Life is short, don't waste it in a
+          Frictionless DEX: Gasless Swaps Made Easy with
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 text-[3rem] md:text-[3rem]">
-            &nbsp;queue.
+            &nbsp; Multi-Chain Support.
           </span>
         </p>
         <p className="text-base text-lighttextGray md:text-left md:w-[85%] tracking-wide">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci iste
-          mollitia nobis debitis. Eos, voluptate dolorem ut enim consectetur,
-          rem, accusantium molestias ipsam inventore repellendus dolores ad
-          mollitia doloremque nemo!
+          Welcome to our Frictionless DEX, a cutting-edge decentralized exchange
+          (DEX) that brings forth a user-friendly solution for gasless token
+          swaps, supporting both EOA(Externally Owned Accounts) and
+          ERC4337(Smart Wallet) wallets across various blockchain networks.
         </p>
         {/* <div onClick={()=> setIsModal(!isModal)}><Button text={" 🦊 Connect MetaMask"} /></div>
         {
           isModal && <SpringModal isOpen={isModal} setIsOpen={setIsModal} />
         } */}
-        <div className="text-black">
+        <div className="text-blac flex gap-5">
           <MetaMaskButton theme={"dark"} color="black"></MetaMaskButton>
-          <button onClick={handleSigner}>Get Signer</button>
+          <button
+            className=" bg-gradient-to-r from-purple-400 to-pink-600  text-white text-black text-left px-12 py-1 rounded-lg "
+            onClick={handler}
+          >
+            {" "}
+            Swap
+          </button>
+          {isModal && <SpringModal isOpen={isModal} setIsOpen={setIsModal} />}
+          {/* <button onClick={handleSigner}>Get Signer</button> */}
         </div>
       </div>
 

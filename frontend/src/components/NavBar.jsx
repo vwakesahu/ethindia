@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from "../assets/logo.jpg"
 import SpringModal from "./SpringModal";
 const NavBar = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -26,8 +27,9 @@ const NavBar = () => {
       <nav className="border-gray-200">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <Link to="/" className="flex">
-            <span className="self-center text-lg font-semibold whitespace-nowrap">
-              Logo
+            <img src={Logo} className="rounded-full w-10 mr-4" alt="" />
+            <span className="self-center text-2xl  text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600  font-semibold whitespace-nowrap">
+              FrictionLess Dex
             </span>
           </Link>
           <button

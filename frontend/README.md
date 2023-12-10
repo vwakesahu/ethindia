@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Frictionless DEX: Gasless Swaps Made Easy with Multi-Chain Support
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Frictionless DEX, the cutting-edge decentralized exchange (DEX) that takes the hassle out of gasless token swaps. Our user-friendly platform supports both EOA and ERC4337 wallets across various blockchain networks, ensuring a seamless experience for both new and existing users.
 
-## Available Scripts
+## Project Overview
 
-In the project directory, you can run:
+Frictionless DEX simplifies token swaps, enabling gasless transactions while providing optimal swaps based on real-time data. Here's a simplified guide on how the platform works:
 
-### `npm start`
+1. *Wallet Connection with MetaMask:*
+   - Connect your MetaMask wallet to seamlessly interact with Frictionless DEX.
+   - For new users, set up a new MetaMask wallet easily.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. *Smart Wallet Creation with Pimlico:*
+   - Utilize MetaMask and Pimlico to create ERC4337 Smart Wallets effortlessly.
+   - Integration with Safe 4337 Module enhances security and functionality.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. *Gasless Swaps with Safe 4337 Module:*
+   - Enjoy gasless swaps directly from your smart wallet.
+   - Leverage Safe 4337 Module and permissionless.js library from Pimlico for secure and efficient ERC4337 transactions.
 
-### `npm test`
+4. *Multi-Chain Support:*
+   - Seamlessly swap tokens across Ethereum, Polygon, Arbitrum, Scroll, Mantle, and more.
+   - No need to navigate complex transactions – it's all taken care of.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How it Works
 
-### `npm run build`
+Frictionless DEX offers a straightforward, user-friendly experience. Connect your MetaMask, create a smart wallet, and start swapping tokens across multiple blockchains. Safe Auth Kit and Safe X Pimlico ensure secure ERC4337 transactions.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Why it Matters
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Frictionless DEX is a game-changer for users who crave simplicity. Swap tokens with confidence, thanks to multi-chain support and optimal swaps.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Get Started
 
-### `npm run eject`
+Dive into the world of gasless and incentivized token swaps with Frictionless DEX. Follow these steps:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Frictionless DEX:
+1. Connect MetaMask for a Seamless Experience
+2. Create ERC4337 Smart Wallet with Pimlico
+3. Perform Gasless Swaps using Safe 4337 Module
+4. Explore Multi-Chain Support for Effortless Token Trading
+5. Experience Secure ERC4337 Transactions
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Note: Currently offering the swap feature, stay tuned for more exciting features to be unlocked!

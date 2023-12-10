@@ -5,7 +5,6 @@ import { NavBar } from "./components/index";
 import DoTransaction from "./pages/DoTransaction";
 import { Metamask } from "./pages/Metamask";
 import { Demo } from "./pages/Demo";
-import { Swap } from "./pages/Swap";
 const App = () => {
 
 
@@ -24,7 +23,6 @@ const App = () => {
             <Route path="/metamask-connect" element={<Metamask />} />
             <Route path="/connect-ex-wallet" element={<ConnectNewWallet />} />
             <Route path="/demo" element={<Demo />} />
-            <Route path="/swap" element={<Swap />} />
 
           </Routes>
         </div>
